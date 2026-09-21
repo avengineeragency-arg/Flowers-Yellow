@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Para Elizabeth ✨</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- ============================================= -->
+    <!-- CANVAS CONTAINER (Three.js renders here)      -->
+    <!-- ============================================= -->
+    <div id="canvas-container"></div>
+
+    <!-- ============================================= -->
+    <!-- PRELOADER                                     -->
+    <!-- ============================================= -->
+    <div id="preloader">
+        <div class="preloader-content">
+            <div class="preloader-spinner"></div>
+            <p class="preloader-text">Preparando un pequeño universo...</p>
+        </div>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- INTRO SCREEN                                  -->
+    <!-- ============================================= -->
+    <div id="intro-screen" class="overlay hidden">
+        <div class="intro-content">
+            <h1 class="intro-title">Para Elizabeth</h1>
+            <p class="intro-subtitle">Hay algo que quiero enseñarte...</p>
+        </div>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- DISCOVER / LANDING SECTION                    -->
+    <!-- ============================================= -->
+    <div id="discover-section" class="overlay hidden">
+        <div class="discover-content">
+            <p class="discover-subtitle">Tengo algo pequeño que enseñarte...</p>
+            <h1 class="discover-title">A veces, las cosas más bonitas<br>aparecen cuando menos lo esperas.</h1>
+            <button id="discover-btn" class="premium-btn" aria-label="Descubrir">
+                <span>Descubrir</span>
+                <span class="btn-arrow">→</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- MESSAGE 1 — First reveal                      -->
+    <!-- ============================================= -->
+    <div id="message-1" class="overlay message-overlay hidden">
+        <div class="message-content">
+            <h1 class="msg-title">Elizabeth</h1>
+            <div class="msg-body">
+                <p class="msg-line">Dicen que las flores amarillas representan alegría y buenos momentos.</p>
+                <p class="msg-line">Así que pensé que sería bonito dejarte un pequeño universo lleno de ellas.</p>
+            </div>
+            <p class="msg-closing msg-line">Espero que te guste 🌼</p>
+        </div>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- MESSAGE FINAL                                 -->
+    <!-- ============================================= -->
+    <div id="message-final" class="overlay message-overlay hidden">
+        <div class="message-content message-content-final">
+            <p class="msg-title msg-final-text">Este pequeño universo es para ti.</p>
+        </div>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- AUDIO TOGGLE                                  -->
+    <!-- ============================================= -->
+    <div id="audio-toggle" class="hidden">
+        <button id="audio-btn" aria-label="Toggle audio">
+            <span class="audio-icon-on">🔊</span>
+            <span class="audio-icon-off" style="display:none;">🔇</span>
+        </button>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- BACKGROUND MUSIC                              -->
+    <!-- ============================================= -->
+    <audio id="bg-music" src="media/flores-amarillas.mp3" preload="auto" loop></audio>
+
+    <!-- ============================================= -->
+    <!-- CUSTOM CURSOR                                 -->
+    <!-- ============================================= -->
+    <div id="custom-cursor">
+        <div class="cursor-dot"></div>
+        <div class="cursor-ring"></div>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- WEBGL FALLBACK                                -->
+    <!-- ============================================= -->
+    <div id="fallback" class="hidden">
+        <div class="fallback-bg"></div>
+        <div class="fallback-stars"></div>
+        <div class="fallback-content">
+            <h1>Para Elizabeth</h1>
+            <div class="fallback-flower">🌼</div>
+            <p>Dicen que las flores amarillas representan alegría y buenos momentos.</p>
+            <p>Así que pensé que sería bonito dejarte un pequeño universo lleno de ellas.</p>
+            <br>
+            <p class="fallback-signature">— De alguien que disfruta conocerte.</p>
+        </div>
+        <div class="fallback-particles"></div>
+    </div>
+
+    <!-- ============================================= -->
+    <!-- CDN: Three.js r143 (global build)             -->
+    <!-- ============================================= -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.143.0/build/three.min.js"></script>
+
+    <!-- Three.js Shaders -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.143.0/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.143.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+
+    <!-- Three.js Post-processing -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.143.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.143.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.143.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.143.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+
+    <!-- Three.js Controls & Utils -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.143.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.143.0/examples/js/utils/BufferGeometryUtils.js"></script>
+
+    <!-- CDN: GSAP -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+    <!-- ============================================= -->
+    <!-- Application Scripts                           -->
+    <!-- ============================================= -->
+    <script src="js/audio.js"></script>
+    <script src="js/flowers.js"></script>
+    <script src="js/particles.js"></script>
+    <script src="js/interaction.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+</html>
